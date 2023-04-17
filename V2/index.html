@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>W7s Weather Widget</title>
+  <meta name="author" content="West7014 studios">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .widget {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      color: #333;
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .location {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .temperature {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .icon {
+      display: block;
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    
+    .description {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    
+    .details {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 12px;
+    }
+    
+    .detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .detail span {
+      margin-bottom: 2px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: 'https://api.weatherapi.com/v1/current.json?key=70bdb013e0174d38aaf214751232903&q=Ogden,UT 84401',
+        dataType: 'json',
+        success: function(data) {
+          $('.location').text(data.location.name + ', ' + data.location.region);
+          $('.icon').attr('src', 'https:' + data.current.condition.icon);
+          $('.temperature').html(data.current.temp_f + '&deg;F');
+          $('.description').text(data.current.condition.text);
+          $('.humidity span.value').text(data.current.humidity + '%');
+          $('.wind span.value').text(data.current.wind_mph + ' mph');
+          $('.feels-like span.value').html(data.current.feelslike_f + '&deg;F');
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="widget">
+    <div class="location"></div>
+    <img class="icon" src="" alt="Weather Icon">
+    <div class="temperature"></div>
+    <div class="description"></div>
+    <div class="details">
+      <div class="detail humidity">
+        <span>Humidity:</span>
+        <span class="value"></span>
+      </div>
+      <div class="detail wind">
+        <span>Wind:</span>
+        <span class="value"></span>
+      </div>
+      <div class="detail feels-like">
+        <span>Feels Like:</span>
+        <span class="value"></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
